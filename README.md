@@ -24,7 +24,7 @@ For the provisioner to work, you must create the Database resource type on your
 Kubernetes cluster:
 
 ```
-$ kubectl apply -f tpr.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/torchbox/k8s-database-controller/master/tpr.yaml
 ```
 
 In addition, if your cluster uses authorization (e.g. RBAC) you should give
@@ -37,6 +37,19 @@ Installation
 The easiest way to run the provisioner is as a pod inside Kubernetes.  See the
 example `deployment.yaml` for an example.  An example configuration file is
 provided in `config.yaml.example`.
+
+Create the configuration in `config.yaml` and apply it to the cluster:
+
+```
+$ kubectl create namespace database-controller
+$ kubectl -n database-controller create secret generic config --from-file=config.yaml=config.yaml
+```
+
+Then deploy the controller:
+
+```
+$ kubectl apply -f https://raw.githubusercontent.com/torchbox/k8s-database-controller/master/deployment.yaml
+```
 
 Usage
 -----
