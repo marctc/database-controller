@@ -1,0 +1,11 @@
+# This is the third party resource type for Database.
+
+---
+
+apiVersion: extensions/v1beta1
+kind: ThirdPartyResource
+metadata:
+  name: database.torchbox.com
+description: "A specification of a database to provision"
+versions:
+- name: v1

@@ -1,0 +1,5 @@
+/config.yaml
+/database-controller
+/database-controller.exe
+/.kube
+*.sw?
