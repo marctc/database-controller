@@ -12,7 +12,7 @@ set -e
 
 printf '####################################################################\n'
 printf '>>> Building Docker image.\n\n'
-docker build --pull -t torchbox/k8s-database-controller:$COMMIT .
+make build TAG=$COMMIT
 
 # If this is a release, push the Docker image to Docker Hub.
 if [ "$TRAVIS_PULL_REQUEST" = "false" -a -n "$TRAVIS_TAG" ]; then
