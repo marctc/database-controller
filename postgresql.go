@@ -147,7 +147,9 @@ func (cllr *DatabaseController) handleDeletePostgresql(db *Database) {
 
 	defer dbconn.Close()
 
-	dbname := fmt.Sprintf("%s_%s", db.Metadata.Namespace, db.Metadata.Name)
+	dbname := strings.Replace(
+			fmt.Sprintf("%s_%s", db.Metadata.Namespace, db.Metadata.Name),
+			"-", "_", -1);
 
 	_, err = dbconn.Exec("UPDATE pg_database SET datallowconn=false WHERE datname=$1", dbname)
 	if err != nil {
