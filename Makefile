@@ -7,7 +7,7 @@
 # freely. This software is provided 'as-is', without any express or implied
 # warranty.
 
-REPOSITORY?=  torchbox.com/k8s-database-controller
+REPOSITORY?=  torchbox/k8s-database-controller
 TAG?=         latest
 
 build:
