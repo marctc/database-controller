@@ -136,7 +136,7 @@ func (cllr *DatabaseController) handleDeletePostgresql(db *Database) {
 
 	u, err := url.Parse(server.URL)
 	password, _ := u.User.Password()
-	dsn := fmt.Sprintf("dbname=%s user=%s password=%s host=%s",
+	dsn := fmt.Sprintf("dbname=%s user=%s password=%s host=%s sslmode=disable",
 		strings.TrimLeft(u.Path, "/"), u.User.Username(), password, u.Host)
 	dbconn, err := sql.Open("postgres", dsn)
 	if err != nil {
