@@ -8,8 +8,8 @@ metadata:
 kind: ServiceAccount
 apiVersion: v1
 metadata:
-  namespace: database
-  name: controller-controller
+  namespace: database-controller
+  name: controller
 
 ---
 
@@ -86,10 +86,10 @@ spec:
       volumes:
       - name: config
         secret:
-          secretName: controller
+          secretName: config
       containers:
       - name: controller
-        image: torchbox/k8s-database-controller:v1.0.0-alpha1
+        image: torchbox/k8s-database-controller:v1.0.0-alpha4
         args:
         - /database-controller
         - --config=/config/config.yaml

@@ -1,0 +1,14 @@
+# This is an example Database resource.  Provision it like this:
+#
+# kubectl create -f example.yaml
+#
+# If you didn't define a "postgresql" type, adjust the type as appropriate.
+
+apiVersion: torchbox.com/v1
+kind: Database
+metadata:
+  name: example-db
+  namespace: default
+spec:
+  secretName: staging-database
+  type: postgresql
