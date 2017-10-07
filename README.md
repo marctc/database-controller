@@ -1,21 +1,22 @@
 Kubernetes database controller
 ==============================
 
-**WARNING**: This is **experimental** software and **drops databases by design**.
-We strongly recommend not running it on production databases and keeping backups.
+**WARNING**: This is **experimental** software and **drops databases by 
+design**.  We strongly recommend keeping regular backups, and not running it on 
+production databases.
 
 This is a database controller for Kubernetes.  It allows users to provision
 databases for their applications by creating "Database" resource in Kubernetes,
 without requiring direct database access or sysadmin intervention.  This is
-useful for staging sites, CI builds, Gitlab review apps and other situations
-where new databases need to be provisioned frequently.
+useful for staging sites, CI builds, review apps and other situations where new 
+databases need to be provisioned frequently.
 
-The controller works by watching for creation of Database resources and running
-`CREATE USER` / `CREATE DATABASE` statements on the configure database servers.
-Both MySQL and PostgreSQL databases are supported, and multiple database classes
-can be configured for each type (e.g. "staging" and "review").  When the
-Database resource is deleted in Kubernetes, the corresponding database and user
-are dropped.
+The controller works by watching for creation of a new custom resouce type 
+called `Database`, and running `CREATE USER` / `CREATE DATABASE` statements on 
+the configure database servers.  Both MySQL and PostgreSQL databases are 
+supported, and multiple database classes can be configured for each type (e.g. 
+"staging" and "review").  When the Database resource is deleted in Kubernetes, 
+the corresponding database and user are dropped.
 
 Cluster setup
 -------------
@@ -24,8 +25,10 @@ For the provisioner to work, you must create the Database resource type on your
 Kubernetes cluster:
 
 ```
-$ kubectl apply -f https://raw.githubusercontent.com/torchbox/k8s-database-controller/master/tpr.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/torchbox/k8s-database-controller/master/crd.yaml
 ```
+
+(For Kubernetes 1.6 or earlier, use `tpr.yaml` instead.)
 
 In addition, if your cluster uses authorization (e.g. RBAC) you should give
 users permission to create and delete Database resources in the torchbox.com/v1
