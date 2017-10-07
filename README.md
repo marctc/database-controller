@@ -9,7 +9,7 @@ databases need to be provisioned frequently.
 
 The controller works by watching for creation of a new custom resouce type
 called `Database`, and running `CREATE USER` / `CREATE DATABASE` statements on
-the configure database servers.  Both MySQL and PostgreSQL databases are
+the configured database server(s).  Both MySQL and PostgreSQL databases are
 supported, and multiple database classes can be configured for each type (e.g.
 "staging" and "review").  When the Database resource is deleted in Kubernetes,
 the corresponding database and user are dropped.
