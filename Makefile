@@ -11,7 +11,6 @@ REPOSITORY?=  torchbox/k8s-database-controller
 TAG?=         latest
 
 build:
-	docker run --rm -v "$$PWD":/go/src/app -w /go/src/app golang:1.8.3-alpine go build -v -o database-controller
 	docker build --pull -t ${REPOSITORY}:${TAG} .
 
 push:
