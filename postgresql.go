@@ -98,7 +98,10 @@ func (cllr *DatabaseController) handleAddPostgresql(db *Database) {
 				Namespace: db.Namespace,
 			},
 			Data: map[string][]byte{
-				"database-url": surl,
+				"database-url":      surl,
+				"database-name":     []byte(dbname),
+				"database-user":     []byte(dbname),
+				"database-password": []byte(gen_password),
 			},
 		}
 
