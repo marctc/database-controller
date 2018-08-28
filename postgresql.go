@@ -159,16 +159,16 @@ func (cllr *DatabaseController) handleDeletePostgresql(db *Database) {
 		fmt.Sprintf("%s_%s", db.Namespace, db.Name),
 		"-", "_", -1)
 
-	_, err = dbconn.Exec("UPDATE pg_database SET datallowconn=false WHERE datname=$1", dbname)
+	_, err = dbconn.Exec(fmt.Sprintf("ALTER DATABASE \"%s\" WITH allow_connections false", dbname))
 	if err != nil {
-		log.Printf("%s/%s: failed to drop database \"%s\": %v\n",
+		log.Printf("%s/%s: failed to stop connections of database \"%s\": %v\n",
 			db.Namespace, db.Name, dbname, err)
 		return
 	}
 
 	_, err = dbconn.Exec("SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname=$1", dbname)
 	if err != nil {
-		log.Printf("%s/%s: failed to drop database \"%s\": %v\n",
+		log.Printf("%s/%s: failed to terminate connections of database \"%s\": %v\n",
 			db.Namespace, db.Name, dbname, err)
 		return
 	}
