@@ -91,7 +91,6 @@ spec:
       - name: controller
         image: torchbox/k8s-database-controller:v1.0.0-alpha6
         args:
-        - /database-controller
         - --config=/config/config.yaml
         volumeMounts:
         - name: config
