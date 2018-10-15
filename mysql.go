@@ -23,7 +23,7 @@ import (
 	apiv1 "k8s.io/client-go/pkg/api/v1"
 )
 
-const mysqlDefaultPort = 3306
+const mysqlDefaultPort = "3306"
 
 func (cllr *DatabaseController) handleAddMysql(db *Database) {
 	var server *MySQLConfig = nil

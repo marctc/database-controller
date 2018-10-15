@@ -23,7 +23,7 @@ import (
 	apiv1 "k8s.io/client-go/pkg/api/v1"
 )
 
-const postgresDefaultPort = 5432
+const postgresDefaultPort = "5432"
 
 func (cllr *DatabaseController) handleAddPostgresql(db *Database) {
 	var server *PostgreSQLConfig = nil
