@@ -23,6 +23,8 @@ import (
 	apiv1 "k8s.io/client-go/pkg/api/v1"
 )
 
+const postgresDefaultPort = "5432"
+
 func (cllr *DatabaseController) handleAddPostgresql(db *Database) {
 	var server *PostgreSQLConfig = nil
 
@@ -100,13 +102,22 @@ func (cllr *DatabaseController) handleAddPostgresql(db *Database) {
 			return
 		}
 
+		port := u.Port()
+		if port == "" {
+			port := postgresDefaultPort
+		}
 		secret = &apiv1.Secret{
 			ObjectMeta: metav1.ObjectMeta{
 				Name:      db.Spec.Secret,
 				Namespace: db.Namespace,
 			},
 			Data: map[string][]byte{
-				"database-url": surl,
+				"database-url":      surl,
+				"database-host":     []byte(u.Hostname()),
+				"database-port":     []byte(port),
+				"database-name":     []byte(dbname),
+				"database-user":     []byte(dbname),
+				"database-password": []byte(gen_password),
 			},
 		}
 

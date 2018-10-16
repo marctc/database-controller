@@ -23,6 +23,8 @@ import (
 	apiv1 "k8s.io/client-go/pkg/api/v1"
 )
 
+const mysqlDefaultPort = "3306"
+
 func (cllr *DatabaseController) handleAddMysql(db *Database) {
 	var server *MySQLConfig = nil
 
@@ -95,13 +97,22 @@ func (cllr *DatabaseController) handleAddMysql(db *Database) {
 			return
 		}
 
-		secret := &apiv1.Secret{
+		port := u.Port()
+		if port == "" {
+			port := mysqlDefaultPort
+		}
+		secret = &apiv1.Secret{
 			ObjectMeta: metav1.ObjectMeta{
 				Name:      db.Spec.Secret,
 				Namespace: db.Namespace,
 			},
 			Data: map[string][]byte{
-				"database-url": surl,
+				"database-url":      surl,
+				"database-host":     []byte(u.Hostname()),
+				"database-port":     []byte(port),
+				"database-name":     []byte(dbname),
+				"database-user":     []byte(dbname),
+				"database-password": []byte(gen_password),
 			},
 		}
 
