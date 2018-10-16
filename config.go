@@ -1,30 +1,29 @@
-// vim:set sw=8 ts=8 noet:
-
 package main
 
 import (
-	"fmt"
 	"errors"
-	"log"
+	"fmt"
 	"io/ioutil"
+	"log"
+
 	"gopkg.in/yaml.v2"
 )
 
 type MySQLConfig struct {
-	Name		string			`yaml:"name"`
-	URL		string			`yaml:"url"`
-	Class		string			`yaml:"class"`
+	Name  string `yaml:"name"`
+	URL   string `yaml:"url"`
+	Class string `yaml:"class"`
 }
 
 type PostgreSQLConfig struct {
-	Name		string			`yaml:"name"`
-	URL		string			`yaml:"url"`
-	Class		string			`yaml:"class"`
+	Name  string `yaml:"name"`
+	URL   string `yaml:"url"`
+	Class string `yaml:"class"`
 }
 
 type DBConfig struct {
-	MySQL		[]MySQLConfig		`yaml:"mysql"`
-	PostgreSQL	[]PostgreSQLConfig	`yaml:"postgresql"`
+	MySQL      []MySQLConfig      `yaml:"mysql"`
+	PostgreSQL []PostgreSQLConfig `yaml:"postgresql"`
 }
 
 func read_config(filename string) (*DBConfig, error) {
@@ -35,7 +34,7 @@ func read_config(filename string) (*DBConfig, error) {
 
 	dbconfig := new(DBConfig)
 	err = yaml.Unmarshal([]byte(data), dbconfig)
-	if (err != nil) {
+	if err != nil {
 		return nil, err
 	}
 
@@ -45,7 +44,7 @@ func read_config(filename string) (*DBConfig, error) {
 		}
 		if mysql.URL == "" {
 			return nil, errors.New(fmt.Sprintf(`MySQL server "%s" missing URL`,
-						mysql.Name))
+				mysql.Name))
 		}
 		if mysql.Class == "" {
 			mysql.Class = "default"

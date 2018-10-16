@@ -1,10 +1,8 @@
-// vim:set sw=8 ts=8 noet:
-
 package main
 
 import (
-	"errors"
 	"crypto/rand"
+	"errors"
 )
 
 var pwletters string = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345678a9!$"
@@ -19,8 +17,8 @@ func makepassword() (string, error) {
 		return "", errors.New("failed to read random data")
 	}
 
-	for c := range(b) {
-		b[c] = pwletters[b[c] & 0x3F]
+	for c := range b {
+		b[c] = pwletters[b[c]&0x3F]
 	}
 
 	return string(b), nil
