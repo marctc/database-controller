@@ -121,11 +121,3 @@ There is no permission checking on the created Secret, so a user with access to
 create Database resources in a namespace can overwrite existing Secrets in that
 namespace.  (This is not considered a serious problem since Kubernetes access
 control is usually done on the namespace level anyway.)
-
-Contact and support
--------------------
-
-The database controller was written by Felicity Tarnell <ft@le-Fay.ORG> and is
-copyright (c) 2016-2017 Torchbox Ltd.
-
-For support, bug reports or feature requests, please open an issue on Github.
