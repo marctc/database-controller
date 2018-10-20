@@ -5,6 +5,7 @@ import (
 	"regexp"
 	"time"
 
+	"github.com/kubehippie/database-controller/metrics"
 	apiv1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/fields"
@@ -31,6 +32,7 @@ type DatabaseController struct {
 	indexer   cache.Indexer
 	queue     workqueue.RateLimitingInterface
 	informer  cache.Controller
+	cm        *metrics.ControllerMetrics
 }
 
 type QueueItem struct {
@@ -186,6 +188,10 @@ func createController(kubeconfig string, dbconfig *DBConfig) *DatabaseController
 	if err != nil {
 		panic(err)
 	}
+
+	cllr.metrics = metrics.NewControllerMetrics()
+	cllr.metrics.RegisterAllMetrics()
+	go cllr.metrics.RunServer()
 
 	return cllr
 }

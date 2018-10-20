@@ -105,6 +105,7 @@ func (cllr *DatabaseController) handleAddMysql(db *Database) {
 				"database-password": []byte(gen_password),
 			},
 		}
+		cllr.cm.RegisterDatabaseCreated("mysql", u.Hostname(), dbname)
 
 		_, err := cllr.Clientset.Secrets(db.Namespace).Create(secret)
 		if err != nil {
@@ -176,4 +177,5 @@ func (cllr *DatabaseController) handleDeleteMysql(db *Database) {
 			db.Namespace, db.Name, err)
 		return
 	}
+	cllr.cm.RegisterDatabaseDelete("mysql", u.Hostname(), dbname)
 }
