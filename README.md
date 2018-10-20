@@ -79,7 +79,7 @@ are the supported types.  `class` is the class of database to create.  If not
 specified, the default is `default`.  The specified class must be configured in
 `config.yaml`, or provisioning will fail.
 
-`secretName` is the name of a secret that will be created to store the database
+`secretName`  is the name of a secret that will be created to store the database
 URL.  The created secret will look like this:
 
 ```
