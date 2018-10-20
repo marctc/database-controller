@@ -1,6 +1,6 @@
 /* vim:set sw=8 ts=8 noet:
  *
- * Copyright (c) 2017 Torchbox Ltd.
+ * Copyright (c) 2017 kubehippie .
  *
  * Permission is granted to anyone to use this software for any purpose,
  * including commercial applications, and to alter it and redistribute it

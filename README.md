@@ -25,7 +25,7 @@ For the provisioner to work, you must create the Database custom resource type
 on your Kubernetes cluster:
 
 ```
-$ kubectl apply -f https://raw.githubusercontent.com/torchbox/k8s-database-controller/master/crd.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/kubehippie/database-controller/master/crd.yaml
 ```
 
 (For Kubernetes 1.6 or earlier, use `tpr.yaml` instead; this creates a
@@ -34,7 +34,7 @@ ThirdPartyResource which you will need to
 when upgrading to 1.8 or later.)
 
 In addition, if your cluster uses authorization (e.g. RBAC) you should give
-users permission to create and delete Database resources in the torchbox.com/v1
+users permission to create and delete Database resources in the kubehippie/v1
 API group.
 
 Installation
@@ -54,7 +54,7 @@ $ kubectl -n database-controller create secret generic config --from-file=config
 Then deploy the controller:
 
 ```
-$ kubectl apply -f https://raw.githubusercontent.com/torchbox/k8s-database-controller/master/deployment.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/kubehippie/database-controller/master/deployment.yaml
 ```
 
 Usage
@@ -63,7 +63,7 @@ Usage
 To provision a database, create a Database resource that looks like this:
 
 ```
-apiVersion: torchbox.com/v1
+apiVersion: kubehippie/v1
 kind: Database
 metadata:
   namespace: default
