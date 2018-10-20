@@ -174,7 +174,7 @@ func createController(kubeconfig string, dbconfig *DBConfig) *DatabaseController
 	}
 
 	groupversion := schema.GroupVersion{
-		Group:   "torchbox.com",
+		Group:   "kubehippie",
 		Version: "v1",
 	}
 

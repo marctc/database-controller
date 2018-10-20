@@ -5,7 +5,7 @@
 apiVersion: extensions/v1beta1
 kind: ThirdPartyResource
 metadata:
-  name: database.torchbox.com
+  name: database.kubehippie
 description: "A specification of a database to provision"
 versions:
 - name: v1
