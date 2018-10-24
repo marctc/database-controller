@@ -104,7 +104,7 @@ func (cllr *DatabaseController) handleAddPostgresql(db *Database) {
 
 		port := u.Port()
 		if port == "" {
-			port := postgresDefaultPort
+			port = postgresDefaultPort
 		}
 		secret = &apiv1.Secret{
 			ObjectMeta: metav1.ObjectMeta{

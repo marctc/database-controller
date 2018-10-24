@@ -89,7 +89,7 @@ func (cllr *DatabaseController) handleAddMysql(db *Database) {
 
 		port := u.Port()
 		if port == "" {
-			port := mysqlDefaultPort
+			port = mysqlDefaultPort
 		}
 		secret = &apiv1.Secret{
 			ObjectMeta: metav1.ObjectMeta{
