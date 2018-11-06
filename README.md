@@ -1,5 +1,6 @@
 Kubernetes database controller
 ==============================
+[![Go Report Card](https://goreportcard.com/badge/github.com/kubehippie/database-controller)](https://goreportcard.com/report/github.com/kubehippie/database-controller)
 
 This is a database controller for Kubernetes.  It allows users to provision
 on-demand databases for their applications by creating "Database" resources in
