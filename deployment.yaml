@@ -19,10 +19,10 @@ metadata:
   name: database-controller
 rules:
 - apiGroups:
-  - torchbox.com
+  - kubejam
   resources:
   - databases
-  - databases.torchbox.com
+  - databases.kubejam
   verbs:
   - create
   - update
@@ -89,7 +89,7 @@ spec:
           secretName: config
       containers:
       - name: controller
-        image: torchbox/k8s-database-controller:v1.0.0-alpha6
+        image: kubejam/database-controller:v1.0.0-alpha6
         args:
         - --config=/config/config.yaml
         volumeMounts:

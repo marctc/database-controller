@@ -4,7 +4,7 @@
 #
 # If you didn't define a "postgresql" type, adjust the type as appropriate.
 
-apiVersion: torchbox.com/v1
+apiVersion: kubejam/v1
 kind: Database
 metadata:
   name: example-db

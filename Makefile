@@ -1,4 +1,4 @@
-REPOSITORY?=  torchbox/k8s-database-controller
+REPOSITORY?=  kubejam/database-controller
 TAG?=         latest
 
 build:
