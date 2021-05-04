@@ -14,30 +14,21 @@ metadata:
 ---
 
 kind: ClusterRole
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: database-controller
 rules:
 - apiGroups:
-  - kubejam
+  - kubejam.io
   resources:
   - databases
-  - databases.kubejam
+  - databases.kubejam.io
   verbs:
   - create
   - update
   - get
   - list
   - watch
-- apiGroups:
-  - extensions
-  resources:
-  - thirdpartyresources
-  verbs:
-  - create
-  - update
-  - get
-  - list
 - apiGroups:
   - ""
   resources:
@@ -50,7 +41,7 @@ rules:
 
 ---
 
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: database-controller
@@ -66,7 +57,7 @@ subjects:
 ---
 
 kind: Deployment
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 metadata:
   namespace: database-controller
   name: controller
@@ -89,7 +80,7 @@ spec:
           secretName: config
       containers:
       - name: controller
-        image: kubejam/database-controller:v1.0.0-alpha6
+        image: xxxxxxxxx.dkr.ecr.us-east-1.amazonaws.com/database-controller:latest
         args:
         - --config=/config/config.yaml
         volumeMounts:

@@ -1,4 +1,4 @@
-REPOSITORY?=  kubejam/database-controller
+REPOSITORY?=  xxxxxxxxx.dkr.ecr.us-east-1.amazonaws.com/database-controller
 TAG?=         latest
 
 build:

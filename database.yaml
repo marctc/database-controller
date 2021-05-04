@@ -1,0 +1,9 @@
+apiVersion: kubejam.io/v1
+kind: Database
+metadata:
+  namespace: default
+  name: mydb
+spec:
+  type: postgresql
+  class: default
+  secretName: mydb-secret
