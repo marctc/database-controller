@@ -57,10 +57,6 @@ func (cllr *DatabaseController) handleAdd(obj interface{}) {
 		return
 	}
 
-	if db.Spec.Class == "" {
-		db.Spec.Class = "default"
-	}
-
 	matched, err := regexp.MatchString("[a-z][a-z0-9-]+", db.Namespace)
 	if !matched || err != nil {
 		cllr.setError(db, "invalid namespace name")
@@ -120,7 +116,7 @@ func (cllr *DatabaseController) handleDelete(obj interface{}) {
 		return
 	}
 
-	log.Printf("%s/%s: dropping database\n",
+	log.Printf("%s/%s: deleting database user\n",
 		db.Namespace,
 		db.Name)
 
@@ -164,7 +160,7 @@ func createController(kubeconfig string, dbconfig *DBConfig) *DatabaseController
 	}
 
 	groupversion := schema.GroupVersion{
-		Group:   "kubejam.io",
+		Group:   "dy.io",
 		Version: "v1",
 	}
 
@@ -217,7 +213,7 @@ func (cllr *DatabaseController) runWorker() {
 
 func (cllr *DatabaseController) run() {
 	watchlist := cache.NewListWatchFromClient(cllr.client,
-		"databases", apiv1.NamespaceAll, fields.Everything())
+		"database-users", apiv1.NamespaceAll, fields.Everything())
 
 	cllr.indexer, cllr.informer = cache.NewIndexerInformer(
 		watchlist,
@@ -240,7 +236,7 @@ func (cllr *DatabaseController) run() {
 
 	cllr.queue = workqueue.NewRateLimitingQueue(workqueue.DefaultControllerRateLimiter())
 
-	log.Println("running")
+	log.Println("controller is up and running")
 
 	defer cllr.queue.ShutDown()
 	stop := make(chan struct{})
@@ -248,7 +244,7 @@ func (cllr *DatabaseController) run() {
 	go cllr.informer.Run(stop)
 
 	if !cache.WaitForCacheSync(stop, cllr.informer.HasSynced) {
-		log.Println("Timed out waiting for caches to sync")
+		log.Println("timed out waiting for caches to sync")
 		return
 	}
 

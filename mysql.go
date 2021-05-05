@@ -19,7 +19,7 @@ func (cllr *DatabaseController) handleAddMysql(db *Database) {
 	var server *MySQLConfig = nil
 
 	for _, candidate := range cllr.DBConfig.MySQL {
-		if db.Spec.Class != candidate.Class {
+		if db.Spec.Name != candidate.Name {
 			continue
 		}
 		server = &candidate
@@ -55,14 +55,6 @@ func (cllr *DatabaseController) handleAddMysql(db *Database) {
 	if err != nil {
 		cllr.setError(db, "failed to generate password")
 		log.Printf("%s/%s: failed to generate password: %s",
-			db.Namespace, db.Name, err)
-		return
-	}
-
-	_, err = dbconn.Exec(fmt.Sprintf("CREATE DATABASE `%s`", dbname))
-	if err != nil {
-		cllr.setError(db, fmt.Sprintf("failed to create database: %v", err))
-		log.Printf("%s/%s: failed to create database: %v\n",
 			db.Namespace, db.Name, err)
 		return
 	}
@@ -126,7 +118,7 @@ func (cllr *DatabaseController) handleAddMysql(db *Database) {
 
 	db.Status.Phase = "done"
 	db.Status.Server = server.Name
-	cllr.client.Put().Namespace(db.Namespace).Resource("databases").Name(db.Name).Body(db).Do()
+	cllr.client.Put().Namespace(db.Namespace).Resource("database-users").Name(db.Name).Body(db).Do()
 }
 
 func (cllr *DatabaseController) handleDeleteMysql(db *Database) {
@@ -162,13 +154,6 @@ func (cllr *DatabaseController) handleDeleteMysql(db *Database) {
 	defer dbconn.Close()
 
 	dbname := fmt.Sprintf("%s_%s", db.Namespace, db.Name)
-
-	_, err = dbconn.Exec(fmt.Sprintf("DROP DATABASE `%s`", dbname))
-	if err != nil {
-		log.Printf("%s/%s: failed to drop database \"%s\": %v\n",
-			db.Namespace, db.Name, dbname, err)
-		return
-	}
 
 	_, err = dbconn.Exec(fmt.Sprintf("DROP USER `%s`@`%%`", dbname))
 	if err != nil {

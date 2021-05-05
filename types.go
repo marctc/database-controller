@@ -7,7 +7,7 @@ import (
 type DatabaseSpec struct {
 	Type   string `json:"type"`
 	Secret string `json:"secretName"`
-	Class  string `json:"class"`
+	Name  string `json:"databaseName"`
 }
 
 type DatabaseStatus struct {

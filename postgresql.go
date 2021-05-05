@@ -19,7 +19,7 @@ func (cllr *DatabaseController) handleAddPostgresql(db *Database) {
 	var server *PostgreSQLConfig = nil
 
 	for _, candidate := range cllr.DBConfig.PostgreSQL {
-		if db.Spec.Class != candidate.Class {
+		if db.Spec.Name != candidate.Name {
 			continue
 		}
 		server = &candidate
@@ -66,17 +66,9 @@ func (cllr *DatabaseController) handleAddPostgresql(db *Database) {
 		return
 	}
 
-	_, err = dbconn.Exec(fmt.Sprintf("CREATE DATABASE \"%s\" TEMPLATE \"template0\"", dbname))
-	if err != nil {
-		cllr.setError(db, fmt.Sprintf("failed to create database: %v", err))
-		log.Printf("%s/%s: failed to create database: %v\n",
-			db.Namespace, db.Name, err)
-		return
-	}
-
 	_, err = dbconn.Exec(fmt.Sprintf("GRANT ALL ON DATABASE \"%s\" TO \"%s\"", dbname, dbname))
 	if err != nil {
-		cllr.setError(db, fmt.Sprintf("failed to create database: %v", err))
+		cllr.setError(db, fmt.Sprintf("failed to grant privileges: %v", err))
 		log.Printf("%s/%s: failed to grant privileges: %v\n",
 			db.Namespace, db.Name, err)
 		return
@@ -131,7 +123,7 @@ func (cllr *DatabaseController) handleAddPostgresql(db *Database) {
 
 	db.Status.Phase = "done"
 	db.Status.Server = server.Name
-	cllr.client.Put().Namespace(db.Namespace).Resource("databases").Name(db.Name).Body(db).Do()
+	cllr.client.Put().Namespace(db.Namespace).Resource("database-users").Name(db.Name).Body(db).Do()
 }
 
 func (cllr *DatabaseController) handleDeletePostgresql(db *Database) {
@@ -167,27 +159,6 @@ func (cllr *DatabaseController) handleDeletePostgresql(db *Database) {
 	dbname := strings.Replace(
 		fmt.Sprintf("%s_%s", db.Namespace, db.Name),
 		"-", "_", -1)
-
-	_, err = dbconn.Exec(fmt.Sprintf("ALTER DATABASE \"%s\" WITH allow_connections false", dbname))
-	if err != nil {
-		log.Printf("%s/%s: failed to stop connections of database \"%s\": %v\n",
-			db.Namespace, db.Name, dbname, err)
-		return
-	}
-
-	_, err = dbconn.Exec("SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname=$1", dbname)
-	if err != nil {
-		log.Printf("%s/%s: failed to terminate connections of database \"%s\": %v\n",
-			db.Namespace, db.Name, dbname, err)
-		return
-	}
-
-	_, err = dbconn.Exec(fmt.Sprintf("DROP DATABASE \"%s\"", dbname))
-	if err != nil {
-		log.Printf("%s/%s: failed to drop database \"%s\": %v\n",
-			db.Namespace, db.Name, dbname, err)
-		return
-	}
 
 	_, err = dbconn.Exec(fmt.Sprintf("DROP ROLE \"%s\"", dbname))
 	if err != nil {

@@ -1,13 +1,13 @@
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:
-  name: databases.kubejam.io
+  name: database-users.dy.io
 spec:
   scope: Namespaced
-  group: kubejam.io
+  group: dy.io
   version: v1
   names:
-    kind: Database
-    plural: databases
-    singular: database
+    kind: DatabaseUser
+    plural: database-users
+    singular: database-user
 

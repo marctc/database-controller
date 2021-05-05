@@ -1,9 +1,9 @@
-apiVersion: kubejam.io/v1
-kind: Database
+apiVersion: dy.io/v1
+kind: DatabaseUser
 metadata:
   namespace: default
-  name: mydb
+  name: mydb-user
 spec:
   type: postgresql
-  class: default
+  databaseName: main
   secretName: mydb-secret

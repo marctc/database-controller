@@ -1,10 +1,8 @@
 
 ---
 mysql:
-- name: mysql-2
-  class: default
+- name: main
   url: mysql://provisioner:mypassword@mysql.database.svc:3306/
 postgresql:
-- name: postgres-4
-  class: default
+- name: main
   url: postgresql://provisioner:mypassword@postgres.database.svc/template1

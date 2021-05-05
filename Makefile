@@ -1,4 +1,4 @@
-REPOSITORY?=  xxxxxxxxx.dkr.ecr.us-east-1.amazonaws.com/database-controller
+REPOSITORY?=  xxxxxxxxxxxx.dkr.ecr.us-east-1.amazonaws.com/database-controller
 TAG?=         latest
 
 build:
